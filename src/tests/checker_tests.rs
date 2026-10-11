@@ -645,6 +645,51 @@ fn restricted_darcs_commands() {
 }
 
 #[test]
+fn standard_pijul_commands() {
+    let mut checker = make_checker(SecurityMode::Standard);
+    for cmd in [
+        "pijul diff",
+        "pijul diff --short",
+        "pijul log",
+        "pijul log --hash-only",
+        "pijul change ABC123",
+        "pijul credit src/main.rs",
+        "pijul list",
+        "pijul ls",
+        "pijul channel",
+        "pijul channel --help",
+        "pijul remote",
+        "pijul remote --help",
+    ] {
+        assert!(
+            matches!(checker.check("bash", cmd), CheckResult::Allowed),
+            "expected Allowed for {cmd}"
+        );
+    }
+}
+
+#[test]
+fn restricted_pijul_commands() {
+    let mut checker = make_checker(SecurityMode::Standard);
+    for cmd in [
+        "pijul record -am 'x'",
+        "pijul record --channel foo",
+        "pijul hooks approve",
+        "pijul hooks show",
+        "pijul channel switch foo",
+        "pijul channel new foo",
+        "pijul channel rename a b",
+        "pijul channel delete foo",
+        "pijul remote delete origin",
+    ] {
+        assert!(
+            matches!(checker.check("bash", cmd), CheckResult::Denied(_)),
+            "expected Denied for {cmd}"
+        );
+    }
+}
+
+#[test]
 fn standard_allows_pixi_run() {
     let mut checker = make_checker(SecurityMode::Standard);
     assert!(matches!(
