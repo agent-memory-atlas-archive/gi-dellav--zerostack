@@ -76,7 +76,7 @@ echo "$api" | jq --argjson orv "$OPENROUTER_VENDORS" --argjson cut "$CUTOFFS" '
   };
   def models_of($p; $c; e): ($p.models // {}) | to_entries | map(chat($c) | e) | sort_by(.id);
   # OpenCode Zen/Go slices: priced entries like the direct-API providers (the
-  # gateways' live /models listing carries no pricing). Retired ids are
+  # gateway /models listings carry no pricing). Retired ids are
   # dropped via `status` (OpenCode marks them, unlike the date-cutoff vendors
   # above), and `@ai-sdk/google` models are skipped — zerostack only speaks
   # the chat/responses/messages transports, not the Gemini-native endpoint.
