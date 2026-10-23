@@ -35,6 +35,7 @@ zerostack --provider openai --model gpt-4o
 ## Provider Recipes
 
 - [API Route](providers/ApiRoute.md)
+- [Cheaper Inference](providers/CheaperInference.md)
 - [MiniMax](providers/Minimax.md)
 - [OpenCode Zen / Go](providers/OpencodeZenGo.md)
 - [Opper](providers/Opper.md)
